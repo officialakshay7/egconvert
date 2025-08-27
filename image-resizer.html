@@ -1,0 +1,1216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Primary Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer - EG Convert</title>
+    <meta name="description"
+        content="Free online image resizer. Resize your images to any dimensions while maintaining quality. Resize JPG, PNG, GIF, WEBP and more. Fast, secure, and no registration required.">
+    <meta name="keywords"
+        content="image resizer, resize images, change image size, image optimization, free image resizer, image dimensions">
+    <meta name="author" content="EG Convert">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://egconvert.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://egconvert.com/">
+    <meta property="og:title" content="Image Resizer - EG Convert">
+    <meta property="og:description"
+        content="Free online image resizer. Resize your images to any dimensions while maintaining quality. Resize JPG, PNG, GIF, WEBP and more. Fast, secure, and no registration required.">
+    <meta property="og:image" content="https://egconvert.com/logo.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EG Convert",
+      "url": "https://egconvert.com/",
+      "description": "Free online image resizer. Resize your images to any dimensions while maintaining quality.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "features": ["Image Resizing", "Multiple Format Support", "Batch Processing", "No Registration Required"],
+      "screenshot": "https://egconvert.com/logo.png"
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/logo.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4a44c9;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        body {
+            font-family: "Rubik", sans-serif;
+            background-color: #f5f7ff;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #6c63ff 0%, #4a44c9 100%);
+            color: white;
+            padding: 6rem 0;
+            margin-top: 5rem;
+        }
+
+        .upload-area {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: -50px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .drop-zone {
+            border: 2px dashed #ced4da;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--primary);
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+
+        .drop-zone.dragover {
+            border-color: var(--primary);
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        .image-list {
+            margin-top: 2rem;
+        }
+
+        .image-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .image-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-preview {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+        .image-info {
+            flex-grow: 1;
+        }
+
+        .image-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .format-card {
+            transition: transform 0.3s;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .format-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .format-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .faq-card {
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .faq-header button {
+            font-weight: 600;
+            padding: 1.2rem;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .social-icon:hover {
+            color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .resize-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .resize-options {
+            margin: 20px 0;
+        }
+        
+        .dimension-inputs {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .dimension-inputs .form-group {
+            flex: 1;
+        }
+        
+        .ratio-lock {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .preset-btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        @media (max-width: 768px) {
+            .image-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .image-preview {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .image-actions {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+
+            .action-buttons {
+                justify-content: center;
+            }
+
+            .hero-section {
+                padding: 3rem 0;
+            }
+
+            .upload-area {
+                padding: 1.5rem;
+            }
+            
+            .dimension-inputs {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .ratio-lock {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="logo" style="width: 30px; height: 30px;"> EG Convert
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="image-convert.html">Converter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="image-compressor.html">Compressor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="image-resizer.html">Resizer</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">Free Online Image Resizer</h1>
+            <p class="lead mb-4">Free online tool to resize images to any dimensions with just a few clicks</p>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="container">
+        <div class="upload-area">
+            <div class="drop-zone" id="dropZone">
+                <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                <h5>Drag & Drop your images here</h5>
+                <p class="text-muted">Supports JPG, PNG, GIF, WEBP, BMP, TIFF and more</p>
+                <p>OR</p>
+                <button class="btn btn-primary px-4" id="browseBtn">Browse Files</button>
+                <input type="file" id="fileInput" class="d-none" accept="image/*" multiple>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-8 mx-auto">
+                    <div class="resize-options">
+                        <label class="form-label">Resize Dimensions</label>
+                        
+                        <div class="dimension-inputs">
+                            <div class="form-group">
+                                <label class="form-label">Width (px)</label>
+                                <input type="number" class="form-control" id="resizeWidth" min="1" placeholder="Width">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Height (px)</label>
+                                <input type="number" class="form-control" id="resizeHeight" min="1" placeholder="Height">
+                            </div>
+                            <div class="ratio-lock">
+                                <button class="btn btn-outline-secondary" id="lockRatio">
+                                    <i class="fas fa-lock"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="preset-buttons">
+                            <button class="btn btn-outline-primary preset-btn" data-width="800" data-height="600">800×600</button>
+                            <button class="btn btn-outline-primary preset-btn" data-width="1024" data-height="768">1024×768</button>
+                            <button class="btn btn-outline-primary preset-btn" data-width="1920" data-height="1080">1920×1080</button>
+                            <button class="btn btn-outline-primary preset-btn" data-width="1080" data-height="1080">1080×1080</button>
+                            <button class="btn btn-outline-primary preset-btn" data-width="1280" data-height="720">1280×720</button>
+                        </div> -->
+                    </div>
+                    
+                    <div class="mb-3 d-none">
+                        <label class="form-label">Output Format</label>
+                        <select class="form-select" id="outputFormat">
+                            <option value="same">Same as original</option>
+                            <option value="jpeg">JPG</option>
+                            <option value="png">PNG</option>
+                            <option value="webp">WEBP</option>
+                        </select>
+                        <div class="form-text">Note: Some formats may not support transparency</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="image-list" id="imageList">
+                <!-- Images will be added here dynamically -->
+            </div>
+
+            <div class="action-buttons" id="actionButtons" style="display: none;">
+                <button class="btn btn-primary btn-lg px-4" id="resizeAllBtn">
+                    <i class="fas fa-expand-alt me-2"></i>Resize All
+                </button>
+                <button class="btn btn-success btn-lg px-4" id="downloadAllBtn" disabled>
+                    <i class="fas fa-download me-2"></i>Download All as ZIP
+                </button>
+                <button class="btn btn-danger btn-lg px-4" id="removeAllBtn">
+                    <i class="fas fa-trash me-2"></i>Remove All
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container my-5 py-5" id="features">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why Choose Our Resizer?</h2>
+            <p class="text-muted">The ultimate image resizing solution for all your needs</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Secure Resizing</h4>
+                    <p class="text-muted">All resizing happens locally in your browser. Your images are never uploaded to any server.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Fast Processing</h4>
+                    <p class="text-muted">Experience lightning-fast resizing with our optimized processing algorithm.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h4>Unlimited Resizing</h4>
+                    <p class="text-muted">Resize as many images as you want without any restrictions or hidden fees.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Formats Section -->
+    <section class="container my-5 py-5 bg-light rounded-3" id="formats">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Supported Formats</h2>
+            <p class="text-muted">We support all major image formats</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="card format-card h-100 text-center p-4">
+                    <div class="format-icon">
+                        <i class="far fa-file-image"></i>
+                    </div>
+                    <h5>JPG/JPEG</h5>
+                    <p class="text-muted">Ideal for photographs with adjustable quality.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card format-card h-100 text-center p-4">
+                    <div class="format-icon">
+                        <i class="far fa-file-image"></i>
+                    </div>
+                    <h5>PNG</h5>
+                    <p class="text-muted">Lossless format with transparency support.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card format-card h-100 text-center p-4">
+                    <div class="format-icon">
+                        <i class="far fa-file-image"></i>
+                    </div>
+                    <h5>GIF</h5>
+                    <p class="text-muted">Supports animations with optimized resizing.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card format-card h-100 text-center p-4">
+                    <div class="format-icon">
+                        <i class="far fa-file-image"></i>
+                    </div>
+                    <h5>WEBP</h5>
+                    <p class="text-muted">Modern format with superior compression capabilities.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card format-card h-100 text-center p-4">
+                    <div class="format-icon">
+                        <i class="far fa-file-image"></i>
+                    </div>
+                    <h5>BMP</h5>
+                    <p class="text-muted">Uncompressed format that can be resized.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card format-card h-100 text-center p-4">
+                    <div class="format-icon">
+                        <i class="far fa-file-image"></i>
+                    </div>
+                    <h5>TIFF</h5>
+                    <p class="text-muted">Professional format with resizing options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container my-5 py-5" id="faq">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Frequently Asked Questions</h2>
+            <p class="text-muted">Find answers to common questions about our resizer</p>
+        </div>
+
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item faq-card">
+                <h2 class="accordion-header faq-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne">
+                        Is this resizer completely free to use?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, our resizer is completely free to use. There are no hidden fees or premium features. You
+                        can resize as many images as you want without any limitations.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item faq-card">
+                <h2 class="accordion-header faq-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo">
+                        Are my images uploaded to your servers?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        No, all image processing happens locally in your browser. Your images are never uploaded to any
+                        server, ensuring complete privacy and security.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item faq-card">
+                <h2 class="accordion-header faq-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree">
+                        What is the maximum file size I can resize?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        The maximum file size depends on your browser and device capabilities. Typically, you can
+                        resize images up to 20-30MB without issues. For best performance with large images, we
+                        recommend using a modern browser.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item faq-card">
+                <h2 class="accordion-header faq-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour">
+                        Can I resize multiple images at once?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, you can select and resize multiple images at once. You can also download all resized
+                        images as a ZIP file.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item faq-card">
+                <h2 class="accordion-header faq-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive">
+                        Will resizing reduce my image quality?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Our resizer uses high-quality algorithms to maintain image quality. For best results, avoid enlarging images beyond their original dimensions as this can cause quality loss.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-4">EG Convert</h4>
+                    <p>The free online image resizer that adjusts dimensions with privacy and ease of use.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="image-convert.html" class="text-white text-decoration-none">Converter</a></li>
+                        <li class="mb-2"><a href="image-compressor.html" class="text-white text-decoration-none">Compressor</a></li>
+                        <li class="mb-2"><a href="image-resizer.html" class="text-white text-decoration-none">Resizer</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h5 class="mb-4">Supported Formats</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">JPG/JPEG</li>
+                        <li class="mb-2">PNG</li>
+                        <li class="mb-2">GIF</li>
+                        <li class="mb-2">WEBP</li>
+                        <li class="mb-2">BMP</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h5 class="mb-4">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@egconvert.com</li>
+                        <li class="mb-2"><i class="fas fa-globe me-2"></i> egconvert.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p class="mb-0">© 2025 EG Convert. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end mb-3">
+                    <a href="about-us.html" class="text-white text-decoration-none me-3">About Us</a>
+                    <a href="contact-us.html" class="text-white text-decoration-none me-3">Contact Us</a>
+                    <a href="disclaimer.html" class="text-white text-decoration-none me-3">Disclaimer</a>
+                    <a href="privacy-policy.html" class="text-white text-decoration-none me-3">Privacy Policy</a>
+                    <a href="terms-conditions.html" class="text-white text-decoration-none">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- JSZip for creating zip files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Custom Javascript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const browseBtn = document.getElementById('browseBtn');
+            const imageList = document.getElementById('imageList');
+            const actionButtons = document.getElementById('actionButtons');
+            const resizeAllBtn = document.getElementById('resizeAllBtn');
+            const downloadAllBtn = document.getElementById('downloadAllBtn');
+            const removeAllBtn = document.getElementById('removeAllBtn');
+            const resizeWidth = document.getElementById('resizeWidth');
+            const resizeHeight = document.getElementById('resizeHeight');
+            const lockRatio = document.getElementById('lockRatio');
+            const outputFormat = document.getElementById('outputFormat');
+            const presetButtons = document.querySelectorAll('.preset-btn');
+
+            let uploadedImages = [];
+            let aspectRatio = 0;
+            let ratioLocked = false;
+
+            // File input click handler
+            browseBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // Handle file selection
+            fileInput.addEventListener('change', function () {
+                handleFiles(this.files);
+                this.value = ''; // Reset input to allow selecting same files again
+            });
+
+            // Drag and drop handlers
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropZone.classList.add('dragover');
+            }
+
+            function unhighlight() {
+                dropZone.classList.remove('dragover');
+            }
+
+            // Handle file drop
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+
+            // Handle ratio locking
+            lockRatio.addEventListener('click', function() {
+                ratioLocked = !ratioLocked;
+                this.innerHTML = ratioLocked ? '<i class="fas fa-lock-open"></i>' : '<i class="fas fa-lock"></i>';
+                this.classList.toggle('btn-secondary');
+                this.classList.toggle('btn-outline-secondary');
+                
+                // If we're locking the ratio, calculate the current aspect ratio
+                if (ratioLocked && resizeWidth.value && resizeHeight.value) {
+                    aspectRatio = parseInt(resizeWidth.value) / parseInt(resizeHeight.value);
+                }
+            });
+
+            // Update height when width changes and ratio is locked
+            resizeWidth.addEventListener('input', function() {
+                if (ratioLocked && aspectRatio && this.value) {
+                    resizeHeight.value = Math.round(parseInt(this.value) / aspectRatio);
+                }
+            });
+
+            // Update width when height changes and ratio is locked
+            resizeHeight.addEventListener('input', function() {
+                if (ratioLocked && aspectRatio && this.value) {
+                    resizeWidth.value = Math.round(parseInt(this.value) * aspectRatio);
+                }
+            });
+
+            // Handle preset buttons
+            presetButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const width = this.getAttribute('data-width');
+                    const height = this.getAttribute('data-height');
+                    
+                    resizeWidth.value = width;
+                    resizeHeight.value = height;
+                    
+                    // Calculate aspect ratio
+                    aspectRatio = width / height;
+                    
+                    // Highlight the selected preset
+                    presetButtons.forEach(btn => btn.classList.remove('btn-primary'));
+                    this.classList.add('btn-primary');
+                });
+            });
+
+            function handleFiles(files) {
+                if (files.length > 0) {
+                    let hasImages = false;
+
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        if (file.type.startsWith('image/')) {
+                            // Check if file is already added
+                            if (!uploadedImages.some(img => img.name === file.name && img.size === file.size)) {
+                                addImageToList(file);
+                                hasImages = true;
+                            }
+                        } else {
+                            alert('Please select only image files.');
+                        }
+                    }
+
+                    // Show action buttons only if multiple images are selected
+                    if (hasImages && uploadedImages.length > 1) {
+                        actionButtons.style.display = 'flex';
+                        updateActionButtons();
+                    }
+                }
+            }
+
+            function addImageToList(file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const imageData = {
+                            id: Date.now() + Math.random().toString(36).substr(2, 9),
+                            name: file.name,
+                            type: file.type,
+                            originalFormat: file.type.split('/')[1].toUpperCase(),
+                            size: formatFileSize(file.size),
+                            originalSize: file.size,
+                            originalWidth: img.width,
+                            originalHeight: img.height,
+                            originalFile: file,
+                            preview: e.target.result,
+                            resized: false,
+                            resizedData: null,
+                            resizedSize: 0,
+                            resizedWidth: 0,
+                            resizedHeight: 0
+                        };
+
+                        uploadedImages.push(imageData);
+                        renderImageItem(imageData);
+
+                        // Show action buttons only if multiple images are selected
+                        if (uploadedImages.length > 1) {
+                            actionButtons.style.display = 'flex';
+                            updateActionButtons();
+                        }
+                        
+                        // Set default resize dimensions to original size if not set
+                        if (!resizeWidth.value && !resizeHeight.value) {
+                            resizeWidth.value = img.width;
+                            resizeHeight.value = img.height;
+                            aspectRatio = img.width / img.height;
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function renderImageItem(imageData) {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.id = `image-${imageData.id}`;
+
+                let statusHtml = '';
+                let resizeInfo = '';
+                
+                if (imageData.resized) {
+                    statusHtml = `<span class="badge bg-success ms-2">Resized to ${imageData.resizedWidth}×${imageData.resizedHeight}</span>`;
+                    resizeInfo = `
+                        <div class="resize-info">
+                            <small>Original: ${imageData.originalWidth}×${imageData.originalHeight} → Resized: ${imageData.resizedWidth}×${imageData.resizedHeight}</small>
+                            <small>Size: ${formatFileSize(imageData.originalSize)} → ${formatFileSize(imageData.resizedSize)}</small>
+                        </div>
+                    `;
+                }
+
+                imageItem.innerHTML = `
+                <img src="${imageData.preview}" alt="${imageData.name}" class="image-preview">
+                <div class="image-info">
+                    <h6 class="mb-1">${imageData.name} ${statusHtml}</h6>
+                    <p class="mb-0 text-muted">Format: ${imageData.originalFormat} | Size: ${imageData.size} | Dimensions: ${imageData.originalWidth}×${imageData.originalHeight}</p>
+                    ${resizeInfo}
+                </div>
+                <div class="image-actions">
+                    <button class="btn btn-sm btn-primary resize-btn" data-id="${imageData.id}" ${imageData.resized ? 'style="display: none;"' : ''}>
+                        <i class="fas fa-expand-alt me-1"></i> Resize
+                    </button>
+                    <button class="btn btn-sm btn-success download-btn" data-id="${imageData.id}" ${imageData.resized ? '' : 'style="display: none;"'}>
+                        <i class="fas fa-download me-1"></i> Download
+                    </button>
+                    <button class="btn btn-sm btn-danger remove-btn" data-id="${imageData.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+
+                imageList.appendChild(imageItem);
+
+                // Add event listeners to the buttons
+                if (!imageData.resized) {
+                    imageItem.querySelector('.resize-btn').addEventListener('click', function () {
+                        resizeImage(imageData.id);
+                    });
+                }
+
+                imageItem.querySelector('.download-btn').addEventListener('click', function () {
+                    downloadImage(imageData.id);
+                });
+
+                imageItem.querySelector('.remove-btn').addEventListener('click', function () {
+                    removeImage(imageData.id);
+                });
+            }
+
+            function updateImageItem(imageId) {
+                const imageData = uploadedImages.find(img => img.id === imageId);
+                if (!imageData) return;
+
+                const imageItem = document.getElementById(`image-${imageId}`);
+                if (!imageItem) return;
+
+                let statusHtml = '';
+                let resizeInfo = '';
+                
+                if (imageData.resized) {
+                    statusHtml = `<span class="badge bg-success ms-2">Resized to ${imageData.resizedWidth}×${imageData.resizedHeight}</span>`;
+                    resizeInfo = `
+                        <div class="resize-info">
+                            <small>Original: ${imageData.originalWidth}×${imageData.originalHeight} → Resized: ${imageData.resizedWidth}×${imageData.resizedHeight}</small>
+                            <small>Size: ${formatFileSize(imageData.originalSize)} → ${formatFileSize(imageData.resizedSize)}</small>
+                        </div>
+                    `;
+                }
+
+                imageItem.innerHTML = `
+                <img src="${imageData.preview}" alt="${imageData.name}" class="image-preview">
+                <div class="image-info">
+                    <h6 class="mb-1">${imageData.name} ${statusHtml}</h6>
+                    <p class="mb-0 text-muted">Format: ${imageData.originalFormat} | Size: ${imageData.size} | Dimensions: ${imageData.originalWidth}×${imageData.originalHeight}</p>
+                    ${resizeInfo}
+                </div>
+                <div class="image-actions">
+                    <button class="btn btn-sm btn-primary resize-btn" data-id="${imageData.id}" ${imageData.resized ? 'style="display: none;"' : ''}>
+                        <i class="fas fa-expand-alt me-1"></i> Resize
+                    </button>
+                    <button class="btn btn-sm btn-success download-btn" data-id="${imageData.id}" ${imageData.resized ? '' : 'style="display: none;"'}>
+                        <i class="fas fa-download me-1"></i> Download
+                    </button>
+                    <button class="btn btn-sm btn-danger remove-btn" data-id="${imageData.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+
+                // Add event listeners to the buttons
+                if (!imageData.resized) {
+                    imageItem.querySelector('.resize-btn').addEventListener('click', function () {
+                        resizeImage(imageData.id);
+                    });
+                }
+
+                imageItem.querySelector('.download-btn').addEventListener('click', function () {
+                    downloadImage(imageData.id);
+                });
+
+                imageItem.querySelector('.remove-btn').addEventListener('click', function () {
+                    removeImage(imageData.id);
+                });
+            }
+
+            // IMAGE RESIZE FUNCTION
+            function resizeImage(imageId) {
+                const imageIndex = uploadedImages.findIndex(img => img.id === imageId);
+                if (imageIndex === -1) return;
+
+                const imageItem = document.getElementById(`image-${imageId}`);
+                const resizeBtn = imageItem.querySelector('.resize-btn');
+
+                // Validate dimensions
+                if (!resizeWidth.value || !resizeHeight.value) {
+                    alert('Please specify both width and height dimensions.');
+                    return;
+                }
+
+                const newWidth = parseInt(resizeWidth.value);
+                const newHeight = parseInt(resizeHeight.value);
+
+                if (newWidth <= 0 || newHeight <= 0) {
+                    alert('Width and height must be positive values.');
+                    return;
+                }
+
+                // Show resizing state
+                resizeBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Resizing...';
+                resizeBtn.disabled = true;
+
+                const imageData = uploadedImages[imageIndex];
+                const targetFormat = outputFormat.value;
+
+                // Create an image element to work with
+                const img = new Image();
+                img.onload = function () {
+                    // Create a canvas to draw the image
+                    const canvas = document.createElement('canvas');
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Use high-quality image rendering
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    // Draw the resized image
+                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                    // Determine the output format
+                    let mimeType;
+                    let fileExtension;
+                    
+                    if (targetFormat === 'same') {
+                        // Keep the original format
+                        mimeType = imageData.type;
+                        fileExtension = imageData.originalFormat.toLowerCase();
+                    } else {
+                        // Use the selected format
+                        switch(targetFormat) {
+                            case 'jpeg':
+                                mimeType = 'image/jpeg';
+                                fileExtension = 'jpg';
+                                break;
+                            case 'png':
+                                mimeType = 'image/png';
+                                fileExtension = 'png';
+                                break;
+                            case 'webp':
+                                mimeType = 'image/webp';
+                                fileExtension = 'webp';
+                                break;
+                            default:
+                                mimeType = 'image/jpeg';
+                                fileExtension = 'jpg';
+                        }
+                    }
+
+                    // Get the resized image as data URL
+                    try {
+                        let dataURL;
+                        
+                        if (mimeType === 'image/jpeg') {
+                            dataURL = canvas.toDataURL(mimeType, 0.92);
+                        } else {
+                            dataURL = canvas.toDataURL(mimeType);
+                        }
+
+                        // Calculate file size
+                        const resizedSize = Math.round((dataURL.length * 3) / 4); // Approximate byte size from base64
+
+                        // Update the image data
+                        imageData.resized = true;
+                        imageData.resizedData = dataURL;
+                        imageData.resizedSize = resizedSize;
+                        imageData.resizedWidth = newWidth;
+                        imageData.resizedHeight = newHeight;
+                        imageData.size = formatFileSize(resizedSize);
+                        imageData.outputFormat = fileExtension.toUpperCase();
+
+                        // Update the preview to show the resized image
+                        imageData.preview = dataURL;
+
+                        // Update UI
+                        updateImageItem(imageId);
+
+                        // Update action buttons
+                        updateActionButtons();
+                    } catch (error) {
+                        alert('Resize failed: ' + error.message);
+                        resizeBtn.innerHTML = '<i class="fas fa-expand-alt me-1"></i> Resize';
+                        resizeBtn.disabled = false;
+                    }
+                };
+
+                img.onerror = function () {
+                    alert('Error loading image for resizing');
+                    resizeBtn.innerHTML = '<i class="fas fa-expand-alt me-1"></i> Resize';
+                    resizeBtn.disabled = false;
+                };
+
+                img.src = imageData.preview;
+            }
+
+            function downloadImage(imageId) {
+                const imageData = uploadedImages.find(img => img.id === imageId);
+                if (!imageData || !imageData.resized) return;
+
+                // Create a download link
+                const nameWithoutExt = imageData.name.split('.').slice(0, -1).join('.');
+                const downloadName = `resized_${nameWithoutExt}.${imageData.outputFormat.toLowerCase()}`;
+
+                const link = document.createElement('a');
+                link.href = imageData.resizedData;
+                link.download = downloadName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            function removeImage(imageId) {
+                // Remove from array
+                uploadedImages = uploadedImages.filter(img => img.id !== imageId);
+
+                // Remove from DOM
+                const imageItem = document.getElementById(`image-${imageId}`);
+                if (imageItem) {
+                    imageItem.remove();
+                }
+
+                // Hide action buttons if no images left or only one image remains
+                if (uploadedImages.length <= 1) {
+                    actionButtons.style.display = 'none';
+                } else {
+                    // Update action buttons
+                    updateActionButtons();
+                }
+            }
+
+            // Update the state of the action buttons
+            function updateActionButtons() {
+                // Show/hide resize all button based on resize status
+                const allResized = uploadedImages.every(img => img.resized);
+                const someUnresized = uploadedImages.some(img => !img.resized);
+
+                if (allResized) {
+                    resizeAllBtn.style.display = 'none';
+                    downloadAllBtn.style.display = 'block';
+                } else if (someUnresized) {
+                    resizeAllBtn.style.display = 'block';
+                    downloadAllBtn.style.display = 'none';
+                }
+
+                // Enable/disable download all button
+                downloadAllBtn.disabled = !allResized;
+            }
+
+            // Resize all images
+            resizeAllBtn.addEventListener('click', function () {
+                uploadedImages.forEach(image => {
+                    if (!image.resized) {
+                        resizeImage(image.id);
+                    }
+                });
+            });
+
+            // Download all images as ZIP
+            downloadAllBtn.addEventListener('click', function () {
+                if (!uploadedImages.every(img => img.resized)) {
+                    alert('Please resize all images before downloading.');
+                    return;
+                }
+
+                // Create a ZIP file
+                const zip = new JSZip();
+
+                // Add each resized image to the ZIP
+                const promises = uploadedImages.map((image, index) => {
+                    return new Promise((resolve) => {
+                        // Convert data URL to blob
+                        fetch(image.resizedData)
+                            .then(res => res.blob())
+                            .then(blob => {
+                                const nameWithoutExt = image.name.split('.').slice(0, -1).join('.');
+                                const fileName = `resized_${nameWithoutExt}.${image.outputFormat.toLowerCase()}`;
+                                zip.file(fileName, blob);
+                                resolve();
+                            });
+                    });
+                });
+
+                // Wait for all images to be added to the zip
+                Promise.all(promises).then(() => {
+                    // Generate the ZIP file
+                    zip.generateAsync({ type: "blob" }).then(function (content) {
+                        // Download the ZIP file
+                        saveAs(content, "resized_images.zip");
+                    });
+                });
+            });
+
+            // Remove all images
+            removeAllBtn.addEventListener('click', function () {
+                if (confirm('Are you sure you want to remove all images?')) {
+                    uploadedImages = [];
+                    imageList.innerHTML = '';
+                    actionButtons.style.display = 'none';
+                    downloadAllBtn.disabled = true;
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
