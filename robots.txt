@@ -1,4 +1,3 @@
 User-agent: *
-Disallow:
 
 Sitemap: https://egconvert.com/sitemap.xml
